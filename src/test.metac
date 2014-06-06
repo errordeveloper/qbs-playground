@@ -1,5 +1,33 @@
 // #{{ first }}_#{{ second }}_#{{ x(1) }}
 
-#{{ system_include( "stdio.h" , "stdint.h" ) }}
+%= system_include(
+    "stdio.h" , "stdint.h"
+) %
 
-#{{ local_include( "stdio.h" , "stdint.h" ) }}
+%= local_include(
+    "stdio.h" , "stdint.h"
+) %
+
+int main() {
+
+%= check( "system(/bin/true)", {
+          okay: "SYSTEM_OKAY",
+          whenOkay: "exit(1)",
+          onErrors: {
+                SYSFATAL: {
+                   message: "dead!",
+                   call: "exit(1)",
+                },
+                SYSMINOR: {
+                   message: "meh!",
+                   goto: "error_hanling",
+                },
+          },
+          onDefault: {
+             message: "okay."
+          },
+        } ) %
+
+error_hanling:
+  exit(2);
+}
