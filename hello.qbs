@@ -7,15 +7,7 @@ Project {
     property bool hasSpecialFeature: true
     Application {
         name: {
-          var t = {
-            first: "Foo",
-            second: "Baz",
-            x: function(a) {
-              return a;
-            },
-            a: [1, 2, 3],
-          };
-          return _.preprocess("#{{ first }}_#{{ second }}_#{{ x(1) }}", t);
+          return _.preprocess('test.metac');
         }
 
         Depends { name: 'cpp' }
