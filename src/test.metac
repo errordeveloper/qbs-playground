@@ -1,0 +1,5 @@
+// #{{ first }}_#{{ second }}_#{{ x(1) }}
+
+#{{ system_include( "stdio.h" , "stdint.h" ) }}
+
+#{{ local_include( "stdio.h" , "stdint.h" ) }}

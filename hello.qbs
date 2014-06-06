@@ -6,9 +6,7 @@ import "underscore-wrapper.js" as _
 Project {
     property bool hasSpecialFeature: true
     Application {
-        name: {
-          return _.preprocess('test.metac');
-        }
+        name: 'metac'
 
         Depends { name: 'cpp' }
         cpp.defines: ['SOMETHING']
@@ -17,14 +15,13 @@ Project {
         files: [
             "src/foo.h",
             "src/foo.cpp",
-            //"src/test.cpp"
+            "src/test.metac"
         ]
 
-        /*
         Transformer {
             inputs: "src/test.metac"
             Artifact {
-                fileName: "src/test.cpp"
+                fileName: "test.cpp"
                 fileTags: "processed_file"
             }
             prepare: {
@@ -32,19 +29,11 @@ Project {
                 cmd.description = "Processing '" + input.filePath + "'";
                 cmd.highlight = "codegen";
                 cmd.sourceCode = function() {
-                    var file = new TextFile(input.filePath);
-                    var content = file.readAll();
-                    file.close()
-                    content = content.replace("test1", "test2");
-                    file = new TextFile(output.filePath, TextFile.WriteOnly);
-                    file.truncate();
-                    file.write(content);
-                    file.close();
+                    _.preprocess(input, output);
                 }
                 return cmd;
             }
         }
-        */
 
         Group {
             condition: project.hasSpecialFeature
